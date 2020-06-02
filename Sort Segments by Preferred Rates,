@@ -1,5 +1,5 @@
-#Question 1:
-#Code to sort segments by their preferred rates:
+/*Question 1:
+Code to sort segments by their preferred rates:*/
 SELECT rate.RateName, AgeGroup, COUNT(AgeGroup) As "Count"
 FROM reservation
 JOIN rate ON rate.RateId = reservation.RateId
@@ -15,9 +15,9 @@ FROM reservation
 JOIN rate ON rate.RateId = reservation.RateId
 GROUP BY  reservation.NationalityCode,reservation.RateId, rate.RateName;
 
-#Question 2: Typical guests that do online check-in. 
-#What is the most common age group, gender and nationalities of people who do online check in?
-#Then also group by week day, and see if most common age group/gender/nationality changes per weekday.
+/*Question 2: Typical guests that do online check-in. 
+What is the most common age group, gender and nationalities of people who do online check in?
+Then also group by week day, and see if most common age group/gender/nationality changes per weekday.*/
 SELECT IsOnlineCheckin, AgeGroup, COUNT(AgeGroup) As "Count"
 FROM [Mews].[dbo].[reservation]
 WHERE IsOnlineCheckin=1
@@ -30,16 +30,16 @@ SELECT IsOnlineCheckin, NationalityCode, COUNT(NationalityCode) As "Count"
 FROM [Mews].[dbo].[reservation]
 WHERE IsOnlineCheckin=1
 GROUP BY  reservation. NationalityCode, reservation.IsOnlineCheckin;
-#And then by Weekday:
+/*And then by Weekday:*/
 SELECT IsOnlineCheckin, NationalityCode, DATENAME(WEEKDAY,EndUtc), COUNT(NationalityCode) As "Count"
 FROM [Mews].[dbo].[reservation]
 WHERE IsOnlineCheckin=1
 GROUP BY  reservation. NationalityCode, reservation.IsOnlineCheckin, DATENAME(WEEKDAY,EndUtc);
 
 
-#Question 3:
-#Average night cost per single occupied capacity = total cost/no. of occupied beds. 
-#Get cost, occupied space sum, per the different segments. 
+/*Question 3:
+Average night cost per single occupied capacity = total cost/no. of occupied beds. 
+Get cost, occupied space sum, per the different segments. */
 SELECT NightCost_Sum / OccupiedSpace_Sum AS 'Cost/Night', AgeGroup 
 FROM [Mews].[dbo].[reservation]
 WHERE OccupiedSpace_Sum <>0
